@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from .oauth.urls import urlpatterns as oauth_urlpatterns
 
 urlpatterns = [
-    path('api/', include('api.urls')),  # Add this line
+    path('api/', include('api.urls')), 
     path('admin/', admin.site.urls), 
+    path('o/', include('tendeq.oauth.urls')),
 ]

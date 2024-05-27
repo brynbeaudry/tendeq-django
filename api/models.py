@@ -31,7 +31,6 @@ class User(AbstractUser):
     username = models.CharField(max_length=255, unique=True)
     email = models.EmailField(max_length=255, unique=True)
     role = models.CharField(max_length=50)  # Roles like 'lender', 'broker', 'borrower', 
-    password_hash = models.CharField(max_length=60)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
 

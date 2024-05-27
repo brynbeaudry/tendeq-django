@@ -112,8 +112,21 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 
+OAUTH2_PROVIDER = {
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 3600,  # 1 hour
+    'SCOPES': {
+        'read': 'Read scope',
+        'write': 'Write scope',
+    },
+}
+
+OAUTH_APPLICATION_CLIENT_ID = 'tendeq'
+OAUTH_APPLICATION_CLIENT_SECRET = 'ZtGKB7Oio3HlkO8GPkeyB5YTJpmnNIhkOG8oQHMUdA5cDQRumv6AewoMP8nNLNx2Lyk5fSx31u2Fu1M8LaWl1Pq9MSc1v4oCtacTi9HH7GlxI2zc9pYevIszpK3ZekDO'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

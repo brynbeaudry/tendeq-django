@@ -1,7 +1,7 @@
 from rest_framework import generics
 from ..models import User
 
-from rest_framework import serializers
+from rest_framework import serializers, permissions
 from ..models import Loan, User
 
 class LoanSerializer(serializers.ModelSerializer):
@@ -11,6 +11,7 @@ class LoanSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Loan
+        permission_classes = [permissions.IsAuthenticated]
         fields = ['id', 'amount', 'interest_rate', 'start_date', 'due_date', 'borrower', 'lender', 'criteria']
         # Optionally add extra_kwargs if you want to make any field read-only or apply other constraints
 
