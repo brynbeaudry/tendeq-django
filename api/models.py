@@ -46,22 +46,9 @@ class User(AbstractUser):
     class Meta:
         db_table = 'user'  # Explicitly set table name
 
-# Property model
-class Property(models.Model):
-    address = models.CharField(max_length=255)
-    city = models.CharField(max_length=100)
-    province = models.CharField(max_length=100)
-    postal_code = models.CharField(max_length=10, blank=True, null=True)
-    valuation = models.DecimalField(max_digits=12, decimal_places=2)
-    occupancy_permit = models.BooleanField(default=False)
-    assessment_value = models.DecimalField(max_digits=12, decimal_places=2)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='properties')
 
-    class Meta:
-        db_table = 'property'  # Explicitly set table name
-    
-    def __str__(self):
-        return self.address
+def default_criteria():
+    return {'max_loan_to_value_ratio': 80, 'min_credit_score': 680}
 
 # Loan model
 class Loan(models.Model):
@@ -69,10 +56,10 @@ class Loan(models.Model):
     interest_rate = models.DecimalField(max_digits=5, decimal_places=2)
     start_date = models.DateField()
     due_date = models.DateField()
-    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='loans')
     borrower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='borrower_loans')
     lender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lender_loans')
-    status = models.CharField(max_length=50)  # 'active', 'paid off', 'default', 'in negotiation'
+    # 'max_loan_to_value_ratio': 80, 'min_credit_score': 680}
+    criteria = models.JSONField(default=default_criteria)  # Add the JSONField for storing criteria
 
     class Meta:
         db_table = 'loan'  # Explicitly set table name
@@ -85,7 +72,6 @@ class Document(models.Model):
     document_type = models.CharField(max_length=50)  # E.g., 'Mortgage Agreement', 'Occupancy Permit', 'Title'
     document_url = models.TextField()
     description = models.TextField(blank=True, null=True)
-    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='documents', null=True, blank=True)
     loan = models.ForeignKey(Loan, on_delete=models.CASCADE, related_name='documents', null=True, blank=True)
 
     class Meta:

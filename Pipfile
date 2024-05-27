@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 django = "*"
 djangorestframework = "*"
+django-oauth-toolkit = "*"
+uvicorn = "*"
 psycopg2-binary = "*"
 
 [dev-packages]

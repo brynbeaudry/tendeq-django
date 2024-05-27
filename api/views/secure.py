@@ -10,3 +10,5 @@ class SecureView(APIView):
 
     def get(self, request):
         return Response({"message": "Hello, you have passed custom authentication and permission checks!"})
+
+
